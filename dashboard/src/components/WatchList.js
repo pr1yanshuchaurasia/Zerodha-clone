@@ -20,7 +20,8 @@ const WatchList = () => {
 
       <ul className="list">
         {watchlist.map((stock, index) => {
-          <WatchListItem stock={stock} key={index} />;
+          return(
+          <WatchListItem stock={stock} key={index} />)
         })}
       </ul>
     </div>
@@ -47,8 +48,9 @@ const WatchListItem = ({ stock }) => {
           {stock.isDown ? (
             <KeyboardArrowDown className="down" />
           ):(<KeyboardArrowUp className="down" />
-            
+
           )}
+            <span className="price">{stock.price}</span>
         </div>
       </div>
     </li>
