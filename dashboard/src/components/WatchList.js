@@ -20,8 +20,7 @@ const WatchList = () => {
 
       <ul className="list">
         {watchlist.map((stock, index) => {
-          return(
-          <WatchListItem stock={stock} key={index} />)
+          return <WatchListItem stock={stock} key={index} />;
         })}
       </ul>
     </div>
@@ -47,12 +46,25 @@ const WatchListItem = ({ stock }) => {
           <span className="percent">{stock.percent}</span>
           {stock.isDown ? (
             <KeyboardArrowDown className="down" />
-          ):(<KeyboardArrowUp className="down" />
-
+          ) : (
+            <KeyboardArrowUp className="down" />
           )}
-            <span className="price">{stock.price}</span>
+          <span className="price">{stock.price}</span>
         </div>
       </div>
+      {showWatchListActions && (
+        <WatchListActions uid={stock.name} />
+      )}
     </li>
+  );
+};
+
+const WatchListActions = ({ uid }) => {
+  return (
+    <span className="actions">
+      <Tooltip title="Buy (B)" placement="top" arrow TransitionComponent={Grow}>
+        <button className="buy">Buy</button>
+      </Tooltip>
+    </span>
   );
 };
