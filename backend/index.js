@@ -197,18 +197,43 @@ app.get("/allPositions", async (req, res) => {
   res.json(allPositions);
 });
 
+// app.post("/newOrder", async (req, res) => {
+//   let newOrder = new OrdersModel({
+//     name: req.body.name,
+//     qty: req.body.qty,
+//     price: req.body.price,
+//     mode: req.body.mode,
+//   });
+
+//   newOrder.save();
+
+//   res.send("Order saved!");
+// });
+
 app.post("/newOrder", async (req, res) => {
-  let newOrder = new OrdersModel({
-    name: req.body.name,
-    qty: req.body.qty,
-    price: req.body.price,
-    mode: req.body.mode,
-  });
+  try {
+    const { name, qty, price, mode } = req.body;
 
-  newOrder.save();
+    // Basic validation (optional)
+    if (!name || !qty || !price || !mode) {
+      return res.status(400).send("Missing required fields.");
+    }
 
-  res.send("Order saved!");
+    const newOrder = new OrdersModel({
+      name,
+      qty,
+      price,
+      mode: mode.toUpperCase() === "SELL" ? "SELL" : "BUY", // ensure valid mode
+    });
+
+    await newOrder.save();
+    res.status(201).send(`Order (${mode}) saved successfully!`);
+  } catch (error) {
+    console.error("Error saving order:", error);
+    res.status(500).send("Internal server error.");
+  }
 });
+
 
 app.listen(PORT, () => {
   console.log("App started!");
