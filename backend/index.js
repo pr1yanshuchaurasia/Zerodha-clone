@@ -1,12 +1,15 @@
 require("dotenv").config();
+
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const { HoldingsModel } = require("./model/HoldingsModel");
+
 const { PositionsModel } = require("./model/PositionsModel");
 const { OrdersModel } = require("./model/OrdersModel");
+
 const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
 
@@ -48,7 +51,7 @@ app.use(bodyParser.json());
 //       price: 1555.45,
 //       net: "+15.18%",
 //       day: "-1.60%",
-
+//       isLoss: true,
 //     },
 //     {
 //       name: "ITC",
@@ -73,7 +76,7 @@ app.use(bodyParser.json());
 //       price: 779.8,
 //       net: "-3.72%",
 //       day: "-0.01%",
-
+//       isLoss: true,
 //     },
 //     {
 //       name: "RELIANCE",
@@ -90,7 +93,7 @@ app.use(bodyParser.json());
 //       price: 430.2,
 //       net: "+32.63%",
 //       day: "-0.34%",
-
+//       isLoss: true,
 //     },
 //     {
 //       name: "SGBMAY29",
@@ -107,7 +110,7 @@ app.use(bodyParser.json());
 //       price: 124.15,
 //       net: "+19.15%",
 //       day: "-0.24%",
-
+//       isLoss: true,
 //     },
 //     {
 //       name: "TCS",
@@ -116,7 +119,7 @@ app.use(bodyParser.json());
 //       price: 3194.8,
 //       net: "+5.03%",
 //       day: "-0.25%",
-
+//       isLoss: true,
 //     },
 //     {
 //       name: "WIPRO",
@@ -127,15 +130,17 @@ app.use(bodyParser.json());
 //       day: "+0.32%",
 //     },
 //   ];
+
 //   tempHoldings.forEach((item) => {
 //     let newHolding = new HoldingsModel({
 //       name: item.name,
 //       qty: item.qty,
 //       avg: item.avg,
 //       price: item.price,
-//       net: item.net,
+//       net: item.day,
 //       day: item.day,
 //     });
+
 //     newHolding.save();
 //   });
 //   res.send("Done!");
@@ -164,6 +169,7 @@ app.use(bodyParser.json());
 //       isLoss: true,
 //     },
 //   ];
+
 //   tempPositions.forEach((item) => {
 //     let newPosition = new PositionsModel({
 //       product: item.product,
@@ -175,6 +181,7 @@ app.use(bodyParser.json());
 //       day: item.day,
 //       isLoss: item.isLoss,
 //     });
+
 //     newPosition.save();
 //   });
 //   res.send("Done!");
@@ -184,6 +191,7 @@ app.get("/allHoldings", async (req, res) => {
   let allHoldings = await HoldingsModel.find({});
   res.json(allHoldings);
 });
+
 app.get("/allPositions", async (req, res) => {
   let allPositions = await PositionsModel.find({});
   res.json(allPositions);
@@ -201,8 +209,9 @@ app.post("/newOrder", async (req, res) => {
 
   res.send("Order saved!");
 });
+
 app.listen(PORT, () => {
   console.log("App started!");
   mongoose.connect(uri);
-  console.log("DB Connected!");
+  console.log("DB started!");
 });
