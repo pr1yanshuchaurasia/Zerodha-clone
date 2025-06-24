@@ -77,4 +77,5 @@ useEffect (()=>{
   );
 };
 
+
 export default Holdings;
