@@ -1,18 +1,44 @@
-import React, {useState,useEffect}from "react";
+import React, { useState, useEffect } from "react";
 
 // import { holdings } from "../data/data";
-import axios from 'axios';
+import axios from "axios";
+import { VerticalGraph } from "./VerticalGraph";
 
 const Holdings = () => {
-
-const [allHoldings,setAllHoldings ]= useState([]);
-useEffect (()=>{
-  axios.get("http://localhost:3002/allHoldings").then((res)=>{
-    console.log(res.data);
-    setAllHoldings(res.data);
-  })
-
-}, []); 
+  const [allHoldings, setAllHoldings] = useState([]);
+  useEffect(() => {
+    axios.get("http://localhost:3002/allHoldings").then((res) => {
+      // console.log(res.data);
+      setAllHoldings(res.data);
+    });
+  }, []);
+  // const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  const labels = allHoldings.map((subArray) => subArray["name"]);
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Dataset 1",
+        data: allHoldings.map((stock)=> stock.price),
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+    ],
+  };
+  // export const data = {
+  //   labels,
+  //   datasets: [
+  //     {
+  //       label: 'Dataset 1',
+  //       data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+  //       backgroundColor: 'rgba(255, 99, 132, 0.5)',
+  //     },
+  //     {
+  //       label: 'Dataset 2',
+  //       data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+  //       backgroundColor: 'rgba(53, 162, 235, 0.5)',
+  //     },
+  //   ],
+  // };
 
   return (
     <>
@@ -73,9 +99,9 @@ useEffect (()=>{
           <p>P&L</p>
         </div>
       </div>
+      <VerticalGraph data={data} />
     </>
   );
 };
-
 
 export default Holdings;
