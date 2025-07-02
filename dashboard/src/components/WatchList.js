@@ -24,7 +24,7 @@ const WatchList = () => {
     labels,
     datasets: [
       {
-        label: "Price",
+        label: "Pric",
         data: watchlist.map((stock) => stock.price),
         backgroundColor: [
           "rgba(255, 99, 132, 0.5)",
