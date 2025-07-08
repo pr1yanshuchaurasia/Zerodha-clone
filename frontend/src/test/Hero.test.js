@@ -10,4 +10,11 @@ describe ("Hero Componet",()=>{
         expect(heroImage).toBeInTheDocument();
         expect(heroImage).toHaveAttribute('src','media/homeHero.png');
     });
+
+       test("renders signup button",()=>{
+        render(<Hero />);
+        const signupButton = screen.getByRole('button', { name: /Signup Now/i });
+        expect(signupButton).toBeInTheDocument();
+        expect(signupButton).toHaveClass("btn-primary");
+    });
 });
